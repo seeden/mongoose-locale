@@ -1,0 +1,31 @@
+{
+	"name": "mongoose-locale",
+	"version": "0.0.1",
+	"description": "Mongoose locale",
+	"author": {
+		"name": "Zlatko Fedor",
+		"email": "zfedor@gmail.com",
+		"url": "http://www.cherrysro.com/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/seeden/mongoose-locale.git"
+	},
+	"keywords": [
+		"mongoose",
+		"locale"
+	],
+	"private": false,
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/MIT"
+		}
+	],
+	"main": "./lib/",
+	"engines": {
+		"node": ">= 0.10.0"
+	},
+	"dependencies": {
+	}
+}
