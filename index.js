@@ -14,10 +14,10 @@ module.exports = function localePlugin (schema, options) {
 		//clean actual path
 		delete(config.options.locale);
 
-		var nested = {
+		var nested = [
 			lg    : { type: String },
 			value : config.options
-		};
+		];
 
 		//replace path
 		schema.path(path, nested);
