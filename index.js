@@ -15,6 +15,7 @@ module.exports = function localePlugin (schema, options) {
 		delete(config.options.locale);
 
 		var nested = [{
+			_id   : false,
 			lg    : { type: String },
 			value : config.options
 		}];
