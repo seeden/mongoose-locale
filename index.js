@@ -7,9 +7,15 @@ module.exports = function localePlugin (schema, options) {
 	}
 
 	schema.eachPath(function(path, config) {
+		if(config.schema) {
+			config.schema.plugin(localePlugin, options);
+			return;
+		}
+
 		if (!config.options.locale) {
 			return;
 		}
+
 
 		//clean actual path
 		delete(config.options.locale);
