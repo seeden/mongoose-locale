@@ -16,9 +16,13 @@ module.exports = function localePlugin (schema, options) {
 			return;
 		}
 
-
 		//clean actual path
 		delete(config.options.locale);
+		if(Array.isArray(config.options.type)) {
+			config.options = config.options.type.length 
+				? config.options.type[0]
+				: schema.constructor.Types.Mixed;
+		}
 
 		var nested = [{
 			_id   : false,
