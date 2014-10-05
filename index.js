@@ -34,7 +34,7 @@ module.exports = function localePlugin (schema, options) {
 		schema.path(path, nested);
 	});
 
-	schema.methods.getPropertyLocalised = function(property, locale, defaultValue) {
+	schema.methods.getPropertyLocalised = function(property, locale, defaultValue, defaultFirst) {
 		defaultValue = defaultValue || null;
 
 		var prop = this.get(property);
@@ -48,7 +48,7 @@ module.exports = function localePlugin (schema, options) {
 			}
 		}
 
-		return defaultValue;		
+		return defaultFirst ? prop[0].value : defaultValue;		
 	};
 
 	schema.methods.hasPropertyLocale = function(property, locale) {
