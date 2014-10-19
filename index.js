@@ -2,9 +2,7 @@
 
 module.exports = function localePlugin (schema, options) {
 	//prepare arguments
-	if(!options) {
-		options = {};
-	}
+	options = options || {};
 
 	schema.eachPath(function(path, config) {
 		if(config.schema) {
@@ -32,6 +30,26 @@ module.exports = function localePlugin (schema, options) {
 
 		//replace path
 		schema.path(path, nested);
+
+		//add i18n
+		var pathParts = path.split('.'),
+			property = pathParts.pop();
+
+		pathParts.push('i18n', property);
+
+		var i18nPath = pathParts.join('.');
+
+		schema.virtual(i18nPath).get(function() { 
+			var _this = this;
+			return {
+				get: function(locale, defaultValue, defaultFirst) {
+					return _this.getPropertyLocalised(path, locale, defaultValue, defaultFirst);
+				},
+				set: function(value, locale) {
+					return _this.setPropertyLocalised(path, value, locale);
+				}
+			};
+		});
 	});
 
 	schema.methods.getPropertyLocalised = function(property, locale, defaultValue, defaultFirst) {
@@ -48,7 +66,39 @@ module.exports = function localePlugin (schema, options) {
 			}
 		}
 
-		return defaultFirst ? prop[0].value : defaultValue;		
+		return defaultFirst && prop.length ? prop[0].value : defaultValue;		
+	};
+
+	schema.methods.setPropertyLocalised = function(property, value, locale) {
+		var prop = this.get(property);
+		if(!prop || !prop.length) {
+			prop = [{
+				lg: locale,
+				value: value
+			}];
+		} else {
+			var exists = false;
+			for(var i=0; i<prop.length; i++) {
+				var item = prop[i];
+
+				if(item.lg !== locale) {
+					continue;
+				}
+
+				item.value = value;
+				exists = true;
+				break;
+			}
+
+			if(!exists) {
+				prop.push({
+					lg: locale,
+					value: value
+				});
+			}
+		}
+
+		this.markModified(property);
 	};
 
 	schema.methods.hasPropertyLocale = function(property, locale) {
