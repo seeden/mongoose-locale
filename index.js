@@ -15,7 +15,8 @@ module.exports = function localePlugin (schema, options) {
 		}
 
 		//clean actual path
-		delete(config.options.locale);
+		delete config.options.locale;
+		
 		if(Array.isArray(config.options.type)) {
 			config.options = config.options.type.length 
 				? config.options.type[0]
