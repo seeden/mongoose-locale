@@ -16,9 +16,9 @@ module.exports = function localePlugin (schema, options) {
 
 		//clean actual path
 		delete config.options.locale;
-		
+
 		if(Array.isArray(config.options.type)) {
-			config.options = config.options.type.length 
+			config.options = config.options.type.length
 				? config.options.type[0]
 				: schema.constructor.Types.Mixed;
 		}
@@ -34,13 +34,13 @@ module.exports = function localePlugin (schema, options) {
 
 		//add i18n
 		var pathParts = path.split('.'),
-			property = pathParts.pop();
+				property = pathParts.pop();
 
 		pathParts.push('i18n', property);
 
 		var i18nPath = pathParts.join('.');
 
-		schema.virtual(i18nPath).get(function() { 
+		schema.virtual(i18nPath).get(function() {
 			var _this = this;
 			return {
 				get: function(locale, defaultValue, defaultFirst) {
@@ -67,26 +67,29 @@ module.exports = function localePlugin (schema, options) {
 			}
 		}
 
-		return defaultFirst && prop.length ? prop[0].value : defaultValue;		
+		return defaultFirst && prop.length ? prop[0].value : defaultValue;
 	};
 
 	schema.methods.setPropertyLocalised = function(property, value, locale) {
 		var prop = this.get(property);
 		if(!prop || !prop.length) {
-			prop = [{
+			prop.set(0, {
 				lg: locale,
 				value: value
-			}];
+			});
 		} else {
 			var exists = false;
 			for(var i=0; i<prop.length; i++) {
-				var item = prop[i];
 
-				if(item.lg !== locale) {
+				if(prop[i].lg !== locale) {
 					continue;
 				}
 
-				item.value = value;
+				prop.set(i, {
+					lg: locale,
+					value: value
+				});
+
 				exists = true;
 				break;
 			}
@@ -99,7 +102,6 @@ module.exports = function localePlugin (schema, options) {
 			}
 		}
 
-		this.markModified(property);
 	};
 
 	schema.methods.hasPropertyLocale = function(property, locale) {
