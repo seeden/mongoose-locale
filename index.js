@@ -93,7 +93,7 @@ module.exports = function localePlugin (schema, options) {
 
 			for (var i = 0; i < prop.length; i++) {
 
-				if(prop[i][opts_lang] !== locale) {
+				if (prop[i][opts_lang] !== locale) {
 					continue;
 				}
 
@@ -130,11 +130,11 @@ module.exports = function localePlugin (schema, options) {
 		var prop = this.get(property);
 
 		if (!prop || !prop.length) {
-			return false
+			return false;
 		}
 
 		var value = {};
-		value[opts_lang] = locale
+		value[opts_lang] = locale;
 		prop.pull(value);
 
 		return true;
