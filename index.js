@@ -126,6 +126,20 @@ module.exports = function localePlugin (schema, options) {
 		return false;
 	};
 
+	schema.methods.removePropertyLocale = function(property, locale) {
+		var prop = this.get(property);
+
+		if (!prop || !prop.length) {
+			return false
+		}
+
+		var value = {};
+		value[opts_lang] = locale
+		prop.pull(value);
+
+		return true;
+	};
+
 	schema.methods.getPropertyLocales = function(property) {
 		var prop = this.get(property),
 				locales = [];
