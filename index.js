@@ -180,4 +180,22 @@ module.exports = function localePlugin (schema, options) {
 		return false;
 	};
 
+
+	schema.statics.setLocale = function(locale, paths) {
+		if (typeof paths == 'string') {
+			paths = paths.split(' ');
+		}
+
+		var props = {};
+
+		paths.forEach(function(path) {
+			props[path + '.' + opts_lang] = locale;
+		});
+
+		var query = this.find(props)
+
+		return query;
+	};
+
+
 };
