@@ -1,6 +1,6 @@
 {
 	"name": "mongoose-locale",
-	"version": "1.0.4",
+	"version": "1.0.6",
 	"description": "Mongoose locale",
 	"author": {
 		"name": "Zlatko Fedor",
@@ -22,7 +22,6 @@
 			"url": "http://www.opensource.org/licenses/MIT"
 		}
 	],
-	"main": "./lib/",
 	"engines": {
 		"node": ">= 0.10.0"
 	},
